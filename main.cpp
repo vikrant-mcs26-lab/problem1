@@ -14,4 +14,7 @@ void initialise_graph(Graph* g){
 int main(){
     Graph graph;
     initialise_graph(&graph);
+    std::vector<Edge> e = graph.get_edge_list();
+
+
 }

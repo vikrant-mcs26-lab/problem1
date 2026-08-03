@@ -2,8 +2,8 @@
 #include <iostream>
 
 typedef struct Edge{
-    int u;
-    int v;
+    int node_u;
+    int node_v;
 } Edge;
 
 
@@ -21,7 +21,7 @@ public:
     void save_graph();
     void generate_graph(int seed, int numberOfEdges);
 
-    std::vector<Edge> get_edge_list;
+    std::vector<Edge> get_edge_list();
 
     void print_graph();
 };

@@ -51,7 +51,19 @@ Graph::~Graph(){
     delete[] matrix;
 }
 
-
-
+std::vector<Edge> Graph::get_edge_list(){
+    std::vector<Edge> edges;
+    for(int u = 0; u < numNodes; ++u){
+        for(int v = 0; v < numNodes; ++v){
+            if (matrix[u][v] > 0){
+                Edge e; 
+                e.node_u = u;
+                e.node_v = v;
+                edges.push_back(e);
+            }
+        }
+    }
+    return edges; 
+}
 
 
