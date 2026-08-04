@@ -9,6 +9,7 @@ typedef struct Edge{
     int node_v;
 } Edge;
 
+void parse_line(int *, int *, std::string, int);
 
 class Graph {
 
@@ -17,6 +18,7 @@ public:
     int** matrix;
 
     Graph() {}
+    Graph(Graph &g);
     Graph(int num);
     ~Graph();
 

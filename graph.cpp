@@ -1,6 +1,22 @@
 #include "include/graph.hpp"
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+
+Graph::Graph(Graph &g){
+    this->numNodes = g.numNodes;
+    this->matrix = new int*[numNodes];
+    
+    for (int i = 0; i < numNodes; ++i){
+        this -> matrix[i] = new int[numNodes]{0};
+        for (int j = 0; j < numNodes; ++j)
+        {
+            matrix[i][j] = g.matrix[i][j];
+        }
+        
+    }
+}
 
 Graph::Graph(int num){
     this->numNodes = num;
@@ -19,7 +35,7 @@ void Graph::generate_graph(int seed, int numberOfEdges){
         u = rand() % numNodes;
         v = rand() % numNodes;
     
-        if(matrix[u][v] == 1)
+        if(u == v || matrix[u][v] == 1 || matrix[v][u] == 1)
             continue;
         
         matrix[u][v] = 1;
@@ -28,12 +44,34 @@ void Graph::generate_graph(int seed, int numberOfEdges){
     }
 }
 
-void Graph::save_graph(){
-    
+void Graph::load_graph(){
+    std::fstream file("./graph.v", std::ios::in);
+    std::string line;
+
+    while(std::getline(file, line)){
+        std::stringstream ss(line);
+        std::string u_str, v_str;
+        if(std::getline(ss, u_str, ',') && std::getline(ss, v_str)){
+            int u = stoi(u_str);
+            int v = stoi(v_str);
+
+            matrix[u][v] = 1;
+        }
+    }
+
+    file.close();
 }
 
-void Graph::load_graph(){
-
+void Graph::save_graph(){
+    std::fstream file("./graph.v", std::ios::out);
+    for(int u = 0; u < numNodes; ++u){
+        for(int v = 0; v < numNodes; ++v){
+            if (matrix[u][v] == 1){
+                file << u << "," << v << "\n";
+            }
+        }
+    }
+    file.close();
 }
 
 void Graph::print_graph(){
@@ -67,4 +105,7 @@ std::vector<Edge> Graph::get_edge_list(){
     return edges; 
 }
 
-
+void parse_line(int* first, int* second, std::string str, int comma){
+    *first = std::stoi(str.substr(0,comma + 1));
+    *second = std::stoi(str.substr(comma + 1));
+}

@@ -7,13 +7,14 @@ std::vector<int> find_vertex_cover(Graph *g){
 
     for(int i = 0; i < (1 << g->numNodes); ++i){
         std::vector<int> subset;
-        for(int j = 0; j < g->numNodes; ++j){
-            if ((i & j) > 0){
+        for(int j = 0; j <= g->numNodes; ++j){
+            if ((i & (1 << j)) > 0){
                 subset.emplace_back(j);
             }
         }
         if (subset.size() < minValue && check_vertex_cover(edge_list, subset)){
             vertex_covers = subset;
+            minValue = subset.size();
         }
     }
 

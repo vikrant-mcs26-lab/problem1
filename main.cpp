@@ -2,28 +2,31 @@
 #include "include/vertex.hpp"
 #include <iostream>
 
-void initialise_graph(Graph* g){
+Graph* initialise_graph(){
     int seed, number_of_nodes, number_of_edges;
     std::cout << "Seed: "; std::cin >> seed; 
     std::cout << "Number of Nodes: "; std::cin >> number_of_nodes;
     std::cout << "Number of Edges: "; std::cin >> number_of_edges;
 
-    *g = Graph(number_of_nodes);
+    Graph *g = new Graph(number_of_nodes);
     g -> generate_graph(seed, number_of_edges);
+
+    return g;
 }
 
 int main(){
-    Graph graph;
-    initialise_graph(&graph);
+    auto graph = initialise_graph();
 
-    graph.print_graph();
+    std::vector<int> vertex_cover = find_vertex_cover(graph);
 
-    std::vector<int> vertex_cover = find_vertex_cover(&graph);
-
-    graph.print_graph();
+    graph->print_graph();
+    
+    std::cout << "Vertex Cover = {";
     for(auto item : vertex_cover){
         std::cout << item << ", ";
     }
-    std::cout << std::endl;
+    std::cout << "}" << std::endl;
+
+    delete graph;
     return 0;
 }
