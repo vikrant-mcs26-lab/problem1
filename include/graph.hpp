@@ -1,6 +1,9 @@
 #include <vector>
 #include <iostream>
 
+#ifndef GRAPH_HPP
+#define GRAPH_HPP
+
 typedef struct Edge{
     int node_u;
     int node_v;
@@ -25,3 +28,5 @@ public:
 
     void print_graph();
 };
+
+#endif

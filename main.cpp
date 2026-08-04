@@ -1,4 +1,5 @@
-#include "graph.hpp"
+#include "include/graph.hpp"
+#include "include/vertex.hpp"
 #include <iostream>
 
 void initialise_graph(Graph* g){
@@ -14,7 +15,15 @@ void initialise_graph(Graph* g){
 int main(){
     Graph graph;
     initialise_graph(&graph);
-    std::vector<Edge> e = graph.get_edge_list();
 
+    graph.print_graph();
 
+    std::vector<int> vertex_cover = find_vertex_cover(&graph);
+
+    graph.print_graph();
+    for(auto item : vertex_cover){
+        std::cout << item << ", ";
+    }
+    std::cout << std::endl;
+    return 0;
 }

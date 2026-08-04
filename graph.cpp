@@ -1,4 +1,4 @@
-#include "graph.hpp"
+#include "include/graph.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -23,6 +23,7 @@ void Graph::generate_graph(int seed, int numberOfEdges){
             continue;
         
         matrix[u][v] = 1;
+        matrix[v][u] = 1;
         ++i;
     }
 }
