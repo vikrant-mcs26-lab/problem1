@@ -1,4 +1,4 @@
-#include "include/graph.hpp"
+#include <graph.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -6,10 +6,8 @@
 
 Graph::Graph(Graph &g){
     this->numNodes = g.numNodes;
-    this->matrix = new int*[numNodes];
-    
+    init_matrix();
     for (int i = 0; i < numNodes; ++i){
-        this -> matrix[i] = new int[numNodes]{0};
         for (int j = 0; j < numNodes; ++j)
         {
             matrix[i][j] = g.matrix[i][j];
@@ -18,13 +16,17 @@ Graph::Graph(Graph &g){
     }
 }
 
+void Graph::init_matrix(){
+    this->matrix = new int*[numNodes];
+    
+    for (int i = 0; i < numNodes; ++i){
+        this -> matrix[i] = new int[numNodes]{0};
+    }
+}
+
 Graph::Graph(int num){
     this->numNodes = num;
-    this->matrix = new int*[num];
-    
-    for (int i = 0; i < num; ++i){
-        this -> matrix[i] = new int[num]{0};
-    }
+    init_matrix();
 }
 
 void Graph::generate_graph(int seed, int numberOfEdges){
@@ -44,9 +46,14 @@ void Graph::generate_graph(int seed, int numberOfEdges){
     }
 }
 
-void Graph::load_graph(){
-    std::fstream file("./graph.v", std::ios::in);
+void Graph::load_graph(std::string filename){
+    std::fstream file(filename, std::ios::in);
     std::string line;
+
+    std::getline(file, line);
+    numNodes = stoi(line);
+    init_matrix();
+
 
     while(std::getline(file, line)){
         std::stringstream ss(line);
@@ -62,8 +69,9 @@ void Graph::load_graph(){
     file.close();
 }
 
-void Graph::save_graph(){
-    std::fstream file("./graph.v", std::ios::out);
+void Graph::save_graph(std::string filename){
+    std::fstream file(filename, std::ios::out);
+    file << numNodes << "\n";
     for(int u = 0; u < numNodes; ++u){
         for(int v = 0; v < numNodes; ++v){
             if (matrix[u][v] == 1){

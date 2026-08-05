@@ -13,6 +13,9 @@ void parse_line(int *, int *, std::string, int);
 
 class Graph {
 
+private:
+    void init_matrix();
+
 public:
     int numNodes;
     int** matrix;
@@ -22,8 +25,8 @@ public:
     Graph(int num);
     ~Graph();
 
-    void load_graph();
-    void save_graph();
+    void load_graph(std::string filename);
+    void save_graph(std::string filename);
     void generate_graph(int seed, int numberOfEdges);
 
     std::vector<Edge> get_edge_list();
