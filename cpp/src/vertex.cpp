@@ -5,6 +5,7 @@
 #include <vector>
 #include <paths.h>
 #include <fstream>
+#include <chrono>
 
 std::vector<int> find_vertex_cover(Graph *g);
 bool check_vertex_cover(std::vector<Edge> edge_list, std::vector<int> &vertex_cover);
@@ -104,6 +105,8 @@ int main(int argc, char **argv){
         return 1;
     }
 
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     Graph g;
     g.load_graph(source);
 
@@ -115,8 +118,12 @@ int main(int argc, char **argv){
     for(auto item : vertex_cover){
         std::cout << item << ", ";
     }
-
+    
     std::cout << "}" << std::endl;
+    
+    auto end_time = std::chrono::high_resolution_clock::now();
+
+    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() << "\n";
 
     if(argc == 3){
         std::filesystem::path dest_folder(argv[2]);
