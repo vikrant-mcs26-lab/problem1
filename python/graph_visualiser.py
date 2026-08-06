@@ -40,10 +40,6 @@ class Graph:
         G.add_nodes_from(self.vertices, color="green")
         G.add_edges_from(self.edges)
         netx.draw(G, with_labels=True, ax=axes[0])
-        # if save_path.is_dir():
-        #     p = save_path.joinpath(self.vertex_file_path.stem + "-graph.png")
-        #     plt.savefig(p)
-
         
         VC = netx.Graph()
         VC.add_nodes_from(self.vertex_cover, color="green")
@@ -53,7 +49,7 @@ class Graph:
             p = save_path.joinpath(self.vertex_file_path.stem + ".png")
             fig.savefig(p)
 
-edges = 25
+edges = 45
 
 g = Graph(f"../cpp/resources/graphs/graph_{edges}.graph", f"../cpp/resources/vertex/graph_{edges}.vertex_cover")
 g.show_graph("./resources")
