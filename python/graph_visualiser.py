@@ -36,6 +36,9 @@ class Graph:
         fig, axes = plt.subplots(nrows=1, ncols=2)
         save_path = path.Path(save_dir)
 
+        axes[0].set_title("Original Graph")
+        axes[1].set_title("Vertex Cover Graph")
+
         G = netx.Graph()
         G.add_nodes_from(self.vertices, color="green")
         G.add_edges_from(self.edges)
@@ -49,7 +52,6 @@ class Graph:
             p = save_path.joinpath(self.vertex_file_path.stem + ".png")
             fig.savefig(p)
 
-edges = 45
-
-g = Graph(f"../cpp/resources/graphs/graph_{edges}.graph", f"../cpp/resources/vertex/graph_{edges}.vertex_cover")
-g.show_graph("./resources")
+for edges in range(10,46,5):
+    g = Graph(f"../cpp/resources/graphs/graph_{edges}.graph", f"../cpp/resources/vertex/graph_{edges}.vertex_cover")
+    g.show_graph("./resources")
