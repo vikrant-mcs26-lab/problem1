@@ -14,7 +14,6 @@ compile_commands.json
 Makefile
 *.cmake
 install_manifest.txt
-*.vertex_cover
 
 # Testing and dependency artifacts
 Testing/
