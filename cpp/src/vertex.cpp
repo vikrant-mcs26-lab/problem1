@@ -95,7 +95,7 @@ void save_graph(std::filesystem::path filename, std::vector<int> vector_set, std
 
 int main(int argc, char **argv){
     if(argc < 2){
-        std::cout << "This program needs 2 arguments\n./vertex_cover <Graph File> <Output File>" << std::endl;
+        std::cout << "This program needs atleast 1 arguments\n./vertex_cover <Graph File> [Output File]" << std::endl;
         return 1;
     }
     std::filesystem::path source(argv[1]);

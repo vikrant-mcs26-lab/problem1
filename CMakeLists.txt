@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(problem1 CXX)
+set(CXX_STANDARD_REQUIRED 17)
 
 set(EXTRA 
     "cpp/src/graph.cpp"
