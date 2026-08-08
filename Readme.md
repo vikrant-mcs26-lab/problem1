@@ -1,10 +1,24 @@
-# Dependencies
+# Project Structure
+```
+├── build/
+├── cpp/
+├── python/
+└── resources/
+```
+
+- `build` directory contains precompiled binaries for linux. 
+- `cpp` directory contains C/C++ Source code for Graph Generation and Vertex Cover Algorithms.
+- `python` directory contains Python source code for visualisation of Graphs.
+- `resources` directory contains input/output files of various programs.
+    - `graph_generation` generates `*.graph` files, which serves as input to `vertex` and produces `*.vertex_cover` files. Both `.graph` and `.vertex_cover` file serves as input to `graph_visualiser.py` which produces `png` files as output. All of these files are stored in `resources` directory. 
+
+# Compiling
+## Dependencies
 - CMake (Version 3.16+)
 - GNU C Compiler (C++ Std 17)
 - Python (Version 3.9+)
 
-# Compiling
-First clone the project and terminal in it before proceeding with the next steps.
+First clone the project and open terminal in it before proceeding with the next steps.
 
 Note: There instructions are for Unix like Operating system. Tested on Fedora 44. 
 
