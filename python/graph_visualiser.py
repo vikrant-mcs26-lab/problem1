@@ -52,6 +52,31 @@ class Graph:
             p = save_path.joinpath(self.vertex_file_path.stem + ".png")
             fig.savefig(p)
 
+    def show_vertex_cover(self, save_dir):
+        save_path = path.Path(save_dir)
+
+        G = netx.Graph()
+
+        graph_vertices = []
+        for vertex in self.vertices:
+            attr = {}
+            if vertex in self.vertex_cover:
+                attr = {"color" : "red"}
+            else:
+                attr = {"color" : "green"}
+            graph_vertices.append((vertex,attr))
+
+        print(graph_vertices)
+
+        G.add_nodes_from(graph_vertices)
+        G.add_edges_from(self.edges)
+
+        netx.draw_shell(G, with_labels=True)
+        
+        if save_path.is_dir():
+            p = save_path.joinpath(self.vertex_file_path.stem + "_vertex_cover.png")
+            plt.savefig(p)
+
 
 def parse_args() -> ap.Namespace :
     parser = ap.ArgumentParser()
@@ -98,7 +123,7 @@ def main():
             print("Save Directory doesn't exists. Creating One")
             save_dir.mkdir()
         g = Graph(graph, vertex)
-        g.show_graph(save_dir)
+        g.show_vertex_cover(save_dir)
 
 if __name__ == "__main__":
     main()
