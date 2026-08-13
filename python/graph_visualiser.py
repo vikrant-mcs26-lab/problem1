@@ -57,21 +57,11 @@ class Graph:
 
         G = netx.Graph()
 
-        graph_vertices = []
-        for vertex in self.vertices:
-            attr = {}
-            if vertex in self.vertex_cover:
-                attr = {"color" : "red"}
-            else:
-                attr = {"color" : "green"}
-            graph_vertices.append((vertex,attr))
-
-        print(graph_vertices)
-
-        G.add_nodes_from(graph_vertices)
+        G.add_nodes_from(self.vertices)
         G.add_edges_from(self.edges)
 
         netx.draw_shell(G, with_labels=True)
+        netx.draw_shell(G, with_labels=True, nodelist=self.vertex_cover, node_color="red",edgelist=[])
         
         if save_path.is_dir():
             p = save_path.joinpath(self.vertex_file_path.stem + "_vertex_cover.png")
