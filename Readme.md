@@ -20,7 +20,7 @@
 
 First clone the project and open terminal in it before proceeding with the next steps.
 
-Note: There instructions are for Unix like Operating system. Tested on Fedora 44. 
+Note: There instructions are for Unix like Operating system. Tested on Fedora 44. Commands may also work in Windows Powershell Terminal but not tested. 
 
 ```bash
 git clone https://github.com/vikrant-mcs26-lab/problem1.git
@@ -31,7 +31,7 @@ Run these commands in root directory of project (i.e. problem1) to compile c++ p
 ```bash
 mkdir build
 cd ./build
-cmake ..
+cmake .. -G "MinGW Makefiles"
 cmake --build .
 ```
 
@@ -40,6 +40,13 @@ In the root directory of project (i.e. problem1), run following commands to setu
 ```bash
 python -m venv venv
 source venv/bin/activate
+pip install -r ./python/requirement.txt
+```
+
+Run these commands for Windows in Powershell Terminal. 
+```bash
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 pip install -r ./python/requirement.txt
 ```
 

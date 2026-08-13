@@ -3,6 +3,9 @@
 /cmake-build-*/
 /build-*/
 
+# Python env
+/venv/
+
 # CMake generated files
 CMakeCache.txt
 CMakeFiles/
@@ -21,3 +24,4 @@ _Dependencies/
 # IDE files
 .vscode/
 .idea/
+

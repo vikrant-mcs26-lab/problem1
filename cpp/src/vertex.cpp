@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <paths.h>
 #include <fstream>
 #include <chrono>
 
@@ -108,7 +107,7 @@ int main(int argc, char **argv){
     auto start_time = std::chrono::high_resolution_clock::now();
 
     Graph g;
-    g.load_graph(source);
+    g.load_graph(source.string());
 
     std::vector<int> vertex_cover = find_vertex_cover(&g);
     std::vector<Edge> edges = graph_with_vertex_set(vertex_cover, g);
