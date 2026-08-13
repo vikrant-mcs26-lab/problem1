@@ -32,7 +32,7 @@ class Graph:
                 v = int(split[1])
                 self.vertex_cover_edges.append((u,v))
 
-    def show_graph(self, save_dir):
+    def show_graph(self, save_dir: str) -> None:
         fig, axes = plt.subplots(nrows=1, ncols=2)
         save_path = path.Path(save_dir)
 
@@ -52,7 +52,7 @@ class Graph:
             p = save_path.joinpath(self.vertex_file_path.stem + ".png")
             fig.savefig(p)
 
-    def show_vertex_cover(self, save_dir):
+    def show_vertex_cover(self, save_dir: str) -> None:
         save_path = path.Path(save_dir)
 
         G = netx.Graph()
@@ -68,22 +68,22 @@ class Graph:
             plt.savefig(p)
 
 
-def parse_args() -> ap.Namespace :
+def parse_args(args: list[str] | None = None) -> ap.Namespace:
     parser = ap.ArgumentParser()
 
     parser.add_argument("--graph-path",type=str,required=True,help="Directory where graph files are stored")
     parser.add_argument("--vertex-cover-path",type=str,required=True,help="Directory where vertex cover files are stored")
     parser.add_argument("--save-dir",type=str,required=True,help="Directory to save resources")
 
-    known_args, unknown = parser.parse_known_args()
+    known_args, unknown = parser.parse_known_args(args)
 
     print(f"Found Unknown arguments: {unknown}")
 
     return known_args
 
 
-def main():
-    opts = parse_args()
+def main(args: list[str] | None = None) -> None:
+    opts = parse_args(args)
 
     graph_path = path.Path(opts.graph_path)
     vertex_cover_path = path.Path(opts.vertex_cover_path)

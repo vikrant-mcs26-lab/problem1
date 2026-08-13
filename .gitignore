@@ -5,6 +5,7 @@
 
 # Python env
 /venv/
+*.pyc
 
 # CMake generated files
 CMakeCache.txt
