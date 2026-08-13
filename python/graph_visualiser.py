@@ -53,7 +53,7 @@ class Graph:
             fig.savefig(p)
 
 
-def parse_args() -> ap.Namespace[str, str, str] :
+def parse_args() -> ap.Namespace :
     parser = ap.ArgumentParser()
 
     parser.add_argument("--graph-path",type=str,required=True,help="Directory where graph files are stored")
