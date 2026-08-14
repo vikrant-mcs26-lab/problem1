@@ -115,7 +115,10 @@ pip install -r ./python/requirement.txt
 
 ## Single Script Does it All
 `automation.py` is capable of running all the tasks from generating graphs, finding vertex cover, and Visualising the graphs. 
-> Note: To use automation.py, you will still need graph_generator and vertex_cover executable. Build directory contains precompiled binaries for Linux (fully tested and working) and Windows (untested) which can be used. 
+> Note:
+> 1. To use automation.py, you will still need graph_generator and vertex_cover executable. Build directory contains precompiled binaries for Linux (fully tested and working) and Windows (untested) which can be used.
+> 2. Run all the commands in root directory
+> 3. You need to activate your python environment first. See [Python Project](#python-project) for the steps. 
 
 
 ```bash
@@ -130,7 +133,6 @@ Example for Windows
 ```bash
 python ./python/automation.py --resources-dir ./res --seed 101 --generator ./build/graph_generator.exe --vertex-cover ./build/vertex.exe
 ```
-Note: You need to activate your python environment first. See [Python Project](#python-project) for the steps. 
 
 
 ## Running Individual executables
