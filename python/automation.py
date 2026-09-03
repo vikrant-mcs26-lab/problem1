@@ -3,6 +3,8 @@ import subprocess
 import pathlib
 import graph_visualiser
 import os
+import time
+
 
 def parse_args() -> argparse.Namespace :
     parser = argparse.ArgumentParser("automation")
@@ -12,6 +14,8 @@ def parse_args() -> argparse.Namespace :
 
     parser.add_argument("--generator",type=str,required=True,help="Path to executable to generate graph")
     parser.add_argument("--vertex-cover",type=str,required=True,help="Path to executable to find vertex cover")
+
+    parser.add_argument("--generate_table",action='store_true')
 
     known, unknown = parser.parse_known_args()
     print(f"Unknown Arguments: {unknown}")
@@ -43,7 +47,7 @@ def execute_graph_generator(executable: pathlib.Path ,seed: int, directory: path
     return True
 
 
-def execute_vertex_cover_generator(executable: pathlib.Path, graph_dir: pathlib.Path, vertex_dir: pathlib.Path) -> bool:
+def execute_vertex_cover_generator(executable: pathlib.Path, graph_dir: pathlib.Path, vertex_dir: pathlib.Path) -> tuple[bool,dict]:
 
     print("-"*50, "Brute Forcing Vertex Cover...", sep="\n")
 
@@ -93,9 +97,7 @@ def execute_graph_visualiser(graph_dir: pathlib.Path, vertex_dir: pathlib.Path, 
     graph_visualiser.main(args)
 
 
-def main():
-    opts = parse_args()
-
+def run_full(opts):
     resources_dir = pathlib.Path(opts.resources_dir).absolute()
     generator = pathlib.Path(opts.generator).absolute()
     vertex_cover = pathlib.Path(opts.vertex_cover).absolute()
@@ -151,6 +153,19 @@ def main():
     if not execute_vertex_cover_generator(vertex_cover, graph_path, vertex_path):
         return
     execute_graph_visualiser(graph_path, vertex_path, image_path)
+
+
+
+def generate_table(opts):
+    pass
+
+
+def main():
+    opts = parse_args()
+    if opts.generate_table:
+        generate_table(opts)
+    else:
+        run_full(opts)
 
 
 

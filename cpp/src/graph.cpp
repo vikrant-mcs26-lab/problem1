@@ -6,6 +6,7 @@
 
 Graph::Graph(Graph &g){
     this->numNodes = g.numNodes;
+    this->numEdges = g.numEdges;
     init_matrix();
     for (int i = 0; i < numNodes; ++i){
         for (int j = 0; j < numNodes; ++j)
@@ -32,6 +33,7 @@ Graph::Graph(int num){
 void Graph::generate_graph(int seed, int numberOfEdges){
     srand(seed);
     int i = 0;
+    this->numEdges = numberOfEdges;
     while (i < numberOfEdges){
         int u,v;
         u = rand() % numNodes;
@@ -50,8 +52,12 @@ void Graph::load_graph(std::string filename){
     std::fstream file(filename, std::ios::in);
     std::string line;
 
-    std::getline(file, line);
+    std::getline(file, line, ' ');
     numNodes = stoi(line);
+
+    std::getline(file, line);
+    numEdges = stoi(line);
+
     init_matrix();
 
 
@@ -71,7 +77,7 @@ void Graph::load_graph(std::string filename){
 
 void Graph::save_graph(std::string filename){
     std::fstream file(filename, std::ios::out);
-    file << numNodes << "\n";
+    file << numNodes << " " << numEdges << "\n";
     for(int u = 0; u < numNodes; ++u){
         for(int v = 0; v < numNodes; ++v){
             if (matrix[u][v] == 1){

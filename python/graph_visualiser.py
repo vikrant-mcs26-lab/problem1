@@ -15,7 +15,8 @@ class Graph:
         self.vertex_file_path = path.Path(vertex_file)
 
         with open(self.graph_file_path, 'r') as file:
-            num_nodes = int(file.readline().strip())
+            line = file.readline().strip().split(" ")
+            num_nodes = int(line[0])
             self.vertices = set(range(num_nodes))
             for line in file.readlines():
                 split = line.strip().split(",")
@@ -24,7 +25,11 @@ class Graph:
                 self.edges.append((u,v))
 
         with open(self.vertex_file_path, 'r') as file:
+            data = file.readline().strip().split(" ")
             vertices = file.readline().strip().split(" ")
+
+            self.duration, self.num_nodes, self.num_edges = data[0], data[1], data[2]
+
             self.vertex_cover = {int(x) for x in vertices}
             for line in file.readlines():
                 split = line.strip().split(",")
@@ -66,7 +71,10 @@ class Graph:
         if save_path.is_dir():
             p = save_path.joinpath(self.vertex_file_path.stem + "_vertex_cover.png")
             plt.savefig(p)
+            plt.clf()
 
+    def get_data(self):
+        return self.duration, self.num_nodes, self.num_edges
 
 def parse_args(args: list[str] | None = None) -> ap.Namespace:
     parser = ap.ArgumentParser()
@@ -114,6 +122,7 @@ def main(args: list[str] | None = None) -> None:
             save_dir.mkdir()
         g = Graph(graph, vertex)
         g.show_vertex_cover(save_dir)
+        print(g.get_data())
 
 if __name__ == "__main__":
     main()

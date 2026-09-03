@@ -18,6 +18,7 @@ private:
 
 public:
     int numNodes;
+    int numEdges;
     int** matrix;
 
     Graph() {}

@@ -11,7 +11,7 @@ bool check_vertex_cover(std::vector<Edge> edge_list, std::vector<int> &vertex_co
 bool contains(std::vector<int> &vertex_cover, int value);
 Graph* initialise_graph();
 std::vector<Edge> graph_with_vertex_set(const std::vector<int> &vertex_cover, const Graph &g);
-void save_graph(std::filesystem::path, std::vector<int>, std::vector<Edge>);
+void save_graph(std::filesystem::path, std::vector<int>, std::vector<Edge>, int time, Graph &g);
 
 std::vector<int> find_vertex_cover(Graph *g){
     std::vector<Edge> edge_list = g -> get_edge_list();
@@ -77,8 +77,10 @@ std::vector<Edge> graph_with_vertex_set(const std::vector<int> &vertex_cover, co
     return output;
 }
 
-void save_graph(std::filesystem::path filename, std::vector<int> vector_set, std::vector<Edge> edges){
+void save_graph(std::filesystem::path filename, std::vector<int> vector_set, std::vector<Edge> edges, int time, Graph& g){
     std::fstream file(filename, std::ios::out);
+
+    file << time << " " << g.numNodes << " " << g.numEdges << "\n";
 
     for (auto item : vector_set){
         file << item << " ";
@@ -122,7 +124,9 @@ int main(int argc, char **argv){
     
     auto end_time = std::chrono::high_resolution_clock::now();
 
-    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() << "\n";
+    auto total_time = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+
+    std::cout << total_time << "\n";
 
     if(argc == 3){
         std::filesystem::path dest_folder(argv[2]);
@@ -132,7 +136,7 @@ int main(int argc, char **argv){
             std::cout << "Please ensure path for Destination path is correct\n./vertex_cover <Graph File> [Output Directory]" << std::endl;
             return 1;
         }
-        save_graph(save_file_name, vertex_cover, edges);
+        save_graph(save_file_name, vertex_cover, edges, total_time, g);
     }
 
     return 0;
