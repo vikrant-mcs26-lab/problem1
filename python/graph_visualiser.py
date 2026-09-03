@@ -2,40 +2,41 @@ import pathlib as path
 import networkx as netx
 import matplotlib.pyplot as plt
 import argparse as ap
-import glob
 
 class Graph:
-    def __init__(self, graph_file: str, vertex_file: str):
+    def __init__(self, graph_file: str = None, vertex_file: str = None):
         self.edges: list[tuple[int,int]] = []
         self.vertices: set[int] = {}
         self.vertex_cover: set[int] = {}
         self.vertex_cover_edges: list[tuple[int,int]] = []
 
-        self.graph_file_path = path.Path(graph_file)
         self.vertex_file_path = path.Path(vertex_file)
 
-        with open(self.graph_file_path, 'r') as file:
-            line = file.readline().strip().split(" ")
-            num_nodes = int(line[0])
-            self.vertices = set(range(num_nodes))
-            for line in file.readlines():
-                split = line.strip().split(",")
-                u = int(split[0])
-                v = int(split[1])
-                self.edges.append((u,v))
+        if graph_file:
+            self.graph_file_path = path.Path(graph_file)
+            with open(self.graph_file_path, 'r') as file:
+                line = file.readline().strip().split(" ")
+                num_nodes = int(line[0])
+                self.vertices = set(range(num_nodes))
+                for line in file.readlines():
+                    split = line.strip().split(",")
+                    u = int(split[0])
+                    v = int(split[1])
+                    self.edges.append((u,v))
 
-        with open(self.vertex_file_path, 'r') as file:
-            data = file.readline().strip().split(" ")
-            vertices = file.readline().strip().split(" ")
+        if vertex_file:
+            with open(self.vertex_file_path, 'r') as file:
+                data = file.readline().strip().split(" ")
+                vertices = file.readline().strip().split(" ")
 
-            self.duration, self.num_nodes, self.num_edges = data[0], data[1], data[2]
+                self.duration, self.num_nodes, self.num_edges = data[0], data[1], data[2]
 
-            self.vertex_cover = {int(x) for x in vertices}
-            for line in file.readlines():
-                split = line.strip().split(",")
-                u = int(split[0])
-                v = int(split[1])
-                self.vertex_cover_edges.append((u,v))
+                self.vertex_cover = {int(x) for x in vertices}
+                for line in file.readlines():
+                    split = line.strip().split(",")
+                    u = int(split[0])
+                    v = int(split[1])
+                    self.vertex_cover_edges.append((u,v))
 
     def show_graph(self, save_dir: str) -> None:
         fig, axes = plt.subplots(nrows=1, ncols=2)
@@ -74,7 +75,7 @@ class Graph:
             plt.clf()
 
     def get_data(self):
-        return self.duration, self.num_nodes, self.num_edges
+        return self.num_nodes, self.num_edges, len(self.vertex_cover), int(self.duration)
 
 def parse_args(args: list[str] | None = None) -> ap.Namespace:
     parser = ap.ArgumentParser()
@@ -122,7 +123,6 @@ def main(args: list[str] | None = None) -> None:
             save_dir.mkdir()
         g = Graph(graph, vertex)
         g.show_vertex_cover(save_dir)
-        print(g.get_data())
 
 if __name__ == "__main__":
     main()

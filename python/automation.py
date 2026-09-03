@@ -3,22 +3,28 @@ import subprocess
 import pathlib
 import graph_visualiser
 import os
+from graph_visualiser import Graph
 import time
+import csv
 
 
 def parse_args() -> argparse.Namespace :
     parser = argparse.ArgumentParser("automation")
 
-    parser.add_argument("--resources-dir",type=str,required=True,help="Directory to store graph files")
+    parser.add_argument("--resources-dir",type=str,help="Directory to store graph files")
     parser.add_argument("--seed", type=str, help="Seed for random number generator")
 
-    parser.add_argument("--generator",type=str,required=True,help="Path to executable to generate graph")
-    parser.add_argument("--vertex-cover",type=str,required=True,help="Path to executable to find vertex cover")
+    parser.add_argument("--generator",type=str,help="Path to executable to generate graph")
+    parser.add_argument("--vertex-cover",type=str,help="Path to executable to find vertex cover")
 
     parser.add_argument("--generate_table",action='store_true')
 
     known, unknown = parser.parse_known_args()
     print(f"Unknown Arguments: {unknown}")
+
+    if not known.generate_table:
+        if not known.generator or not known.vertex_cover:
+            raise Exception("Required Argument not found")
 
     return known
 
@@ -157,7 +163,21 @@ def run_full(opts):
 
 
 def generate_table(opts):
-    pass
+    resources_dir = pathlib.Path(opts.resources_dir).absolute()
+    vertex_path = resources_dir.joinpath("vertex")
+    csv_path = resources_dir.joinpath("table.csv")
+
+    with open(csv_path, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["(n,m)", "Size", "Time (s)"])
+
+        glob = vertex_path.glob("*.vertex_cover")
+        for g in glob:
+            g = Graph(vertex_file=g)
+            data = g.get_data()
+            writer.writerow([f"({data[0]},{data[1]})", data[2], f"{data[3] * 10e-6}",])
+    
+
 
 
 def main():
