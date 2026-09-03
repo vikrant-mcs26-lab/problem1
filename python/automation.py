@@ -11,20 +11,14 @@ import csv
 def parse_args() -> argparse.Namespace :
     parser = argparse.ArgumentParser("automation")
 
-    parser.add_argument("--resources-dir",type=str,help="Directory to store graph files")
+    parser.add_argument("--resources-dir",type=str,required=True,help="Directory to store graph files")
     parser.add_argument("--seed", type=str, help="Seed for random number generator")
 
-    parser.add_argument("--generator",type=str,help="Path to executable to generate graph")
-    parser.add_argument("--vertex-cover",type=str,help="Path to executable to find vertex cover")
-
-    parser.add_argument("--generate_table",action='store_true')
+    parser.add_argument("--generator",type=str,required=True,help="Path to executable to generate graph")
+    parser.add_argument("--vertex-cover",type=str,required=True,help="Path to executable to find vertex cover")
 
     known, unknown = parser.parse_known_args()
     print(f"Unknown Arguments: {unknown}")
-
-    if not known.generate_table:
-        if not known.generator or not known.vertex_cover:
-            raise Exception("Required Argument not found")
 
     return known
 
@@ -182,10 +176,9 @@ def generate_table(opts):
 
 def main():
     opts = parse_args()
-    if opts.generate_table:
-        generate_table(opts)
-    else:
-        run_full(opts)
+
+    run_full(opts)
+    generate_table(opts)
 
 
 
